@@ -6,13 +6,13 @@ module.exports = React.createClass({
       <If condition={this.props.ifCondition}>
         <If condition={this.props.nestedIfCondition}>
           <span>If-If</span>
-          <Else />
+        <Else />
           <span>If-Else</span>
         </If>
         <Else />
         <If condition={this.props.nestedIfCondition}>
           <span>Else-If</span>
-          <Else />
+        <Else />
           <span>Else-Else</span>
         </If>
       </If>
