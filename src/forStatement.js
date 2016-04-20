@@ -12,19 +12,19 @@ var ATTRIBUTES = {
 
 function addMapParam(types, params, attribute) {
   if (attribute && attribute.value) {
-    params.push(types.Identifier(attribute.value.value))
+    params.push(types.Identifier(attribute.value.value));
   }
 }
 
 function checkForString(attributes, name, errorInfos) {
   if (attributes[name] && !astUtil.isStringLiteral(attributes[name])) {
-    errorUtil.throwNotStringType(name, errorInfos)
+    errorUtil.throwNotStringType(name, errorInfos);
   }
 }
 
 function checkForExpression(attributes, name, errorInfos) {
   if (attributes[name] && !astUtil.isExpressionContainer(attributes[name])) {
-    errorUtil.throwNotExpressionType(name, errorInfos)
+    errorUtil.throwNotExpressionType(name, errorInfos);
   }
 }
 
@@ -33,14 +33,14 @@ module.exports = function(babel) {
 
   return function(node, file) {
     var mapParams = [];
-    var errorInfos = { node: node, file: file, element: ELEMENTS.FOR };
+    var errorInfos = {node: node, file: file, element: ELEMENTS.FOR};
     var attributes = astUtil.getAttributeMap(node);
     var children = astUtil.getChildren(types, node);
     var returnExpression = astUtil.getSanitizedExpressionForContent(types, children);
 
     // required attribute
     if (!attributes[ATTRIBUTES.OF]) {
-      errorUtil.throwNoAttribute(ATTRIBUTES.OF, errorInfos)
+      errorUtil.throwNoAttribute(ATTRIBUTES.OF, errorInfos);
     }
     // check for correct data types, as far as possible
     checkForExpression(attributes, ATTRIBUTES.OF, errorInfos);
@@ -71,5 +71,5 @@ module.exports = function(babel) {
         types.identifier('this')
       ]
     );
-  }
+  };
 };

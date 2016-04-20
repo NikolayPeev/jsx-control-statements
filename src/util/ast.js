@@ -4,7 +4,7 @@ var TYPES = {
   STRING_LITERAL: 'StringLiteral'
 };
 
-function getTagName (node) {
+function getTagName(node) {
   return node.openingElement.name.name;
 }
 
@@ -15,7 +15,7 @@ function getTagName (node) {
  * @param {string} tagName - Name of element
  * @returns {boolean} whether the searched for element was found
  */
-exports.isTag = isTag = function (node, tagName) {
+exports.isTag = function(node, tagName) {
   return node.type === TYPES.ELEMENT && getTagName(node) === tagName;
 };
 
@@ -56,7 +56,7 @@ exports.isStringLiteral = function(attribute) {
  * @param {JSXElement} node - Current node from which attributes are gathered
  * @returns {object} Map of all attributes with their name as key
  */
-exports.getAttributeMap = function (node) {
+exports.getAttributeMap = function(node) {
   return node.openingElement.attributes.reduce(function(result, attr) {
     result[attr.name.name] = attr;
     return result;
@@ -81,18 +81,20 @@ exports.getChildren = function(babelTypes, node) {
  * @param {JSXElement} node - Current node to which the new attribute is added
  * @param {string} keyValue - Value of the key
  */
-var addKeyAttribute = exports.addKeyAttribute = function(babelTypes, node, keyValue) {
+exports.addKeyAttribute = function(babelTypes, node, keyValue) {
   var keyFound;
+  var keyAttrib;
+
   node.openingElement.attributes.forEach(function(attrib) {
-    if(babelTypes.isJSXAttribute(attrib) && attrib.name.name === 'key') {
+    if (babelTypes.isJSXAttribute(attrib) && attrib.name.name === 'key') {
       keyFound = true;
       return false;
     }
   });
 
   if (!keyFound) {
-    var keyAttrib = babelTypes.jSXAttribute(babelTypes.jSXIdentifier('key'), babelTypes.stringLiteral(''+keyValue));
-    node.openingElement.attributes.push(keyAttrib)
+    keyAttrib = babelTypes.jSXAttribute(babelTypes.jSXIdentifier('key'), babelTypes.stringLiteral('' + keyValue));
+    node.openingElement.attributes.push(keyAttrib);
   }
 };
 
@@ -107,15 +109,14 @@ var addKeyAttribute = exports.addKeyAttribute = function(babelTypes, node, keyVa
 exports.getSanitizedExpressionForContent = function(babelTypes, blocks) {
   if (!blocks.length) {
     return babelTypes.NullLiteral();
-  }
-  else if (blocks.length == 1) {
+  } else if (blocks.length === 1) {
     return blocks[0];
   }
 
   for (var i = 0; i < blocks.length; i++) {
     var block = blocks[i];
     if (babelTypes.isJSXElement(block)) {
-      addKeyAttribute(babelTypes, block, i);
+      exports.addKeyAttribute(babelTypes, block, i);
     }
   }
 
