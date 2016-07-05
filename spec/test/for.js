@@ -5,6 +5,7 @@ var util = require('../testUtil');
 describe('requiring in component with minimalistic for', function () {
   var FixtureEmpty = require('../fixtures/for/for-empty.jsx');
   var FixtureNoEach = require('../fixtures/for/for-without-each.jsx');
+  var FixtureWithIndexNoEach = require('../fixtures/for/for-with-index-without-each');
 
   describe('should render nothing if loop is empty', function() {
     var rendered = util.render(FixtureEmpty);
@@ -14,6 +15,11 @@ describe('requiring in component with minimalistic for', function () {
   describe('should simply iterate without each', function() {
     var rendered = util.render(FixtureNoEach);
     expect(rendered).to.match(/<div[^>]*>(<span[^>]*>ABC<\/span>){3}<\/div>/);
+  });
+
+  describe('should populate the index with the correct values', function() {
+    var rendered = util.render(FixtureWithIndexNoEach);
+    expect(rendered).to.match(/<div[^>]*>(<span[^>]*>1<\/span>)(<span[^>]*>2<\/span>)(<span[^>]*>3<\/span>)<\/div>/);
   });
 });
 
