@@ -53,6 +53,9 @@ module.exports = function(babel) {
     }
 
     addMapParam(types, mapParams, attributes[ATTRIBUTES.EACH]);
+    if (mapParams.length === 0){
+      mapParams = [types.Identifier('placeholder')];
+    }
     addMapParam(types, mapParams, attributes[ATTRIBUTES.INDEX]);
 
     return types.callExpression(
