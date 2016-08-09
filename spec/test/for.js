@@ -19,7 +19,7 @@ describe('requiring in component with minimalistic for', function () {
 
   describe('should populate the index with the correct values', function() {
     var rendered = util.render(FixtureWithIndexNoEach);
-    expect(rendered).to.match(/<div[^>]*>(<span[^>]*>1<\/span>)(<span[^>]*>2<\/span>)(<span[^>]*>3<\/span>)<\/div>/);
+    expect(rendered).to.match(/<div[^>]*>(<span[^>]*>0<\/span>)(<span[^>]*>1<\/span>)(<span[^>]*>2<\/span>)<\/div>/);
   });
 });
 
